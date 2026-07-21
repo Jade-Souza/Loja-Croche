@@ -55,7 +55,7 @@ export default function Header() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "0 30px",
+            padding: "0 20px",
             position: "relative",
           }}
         >
@@ -79,8 +79,8 @@ export default function Header() {
               src={menuIcon}
               alt="Menu"
               style={{
-                width: "30px",
-                height: "30px",
+                width: "28px",
+                height: "28px",
               }}
             />
           </button>
@@ -98,7 +98,7 @@ export default function Header() {
                 src={logo}
                 alt="Eliz Crochê"
                 style={{
-                  height: "55px",
+                  height: "50px",
                   objectFit: "contain",
                 }}
               />
@@ -110,7 +110,7 @@ export default function Header() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "20px",
+              gap: "15px",
             }}
           >
             {/* Busca */}
@@ -132,20 +132,20 @@ export default function Header() {
                 src={searchIcon}
                 alt="Pesquisar"
                 style={{
-                  width: "22px",
-                  height: "22px",
+                  width: "20px",
+                  height: "20px",
                 }}
               />
             </button>
 
-            {/* Conta do Cliente */}
+            {/* Conta do Cliente (Oculta em telas muito pequenas se necessário) */}
             {cliente ? (
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                 <span
                   style={{
                     color: "#7A4E3A",
                     fontWeight: "600",
-                    fontSize: "14px",
+                    fontSize: "13px",
                   }}
                 >
                   Olá, {cliente.nome.split(" ")[0]}
@@ -157,7 +157,7 @@ export default function Header() {
                     border: "none",
                     color: "#d9534f",
                     cursor: "pointer",
-                    fontSize: "12px",
+                    fontSize: "11px",
                     fontWeight: "bold",
                   }}
                 >
@@ -171,6 +171,7 @@ export default function Header() {
                   textDecoration: "none",
                   color: "#7A4E3A",
                   fontWeight: "500",
+                  fontSize: "14px",
                 }}
               >
                 Minha Conta
@@ -242,143 +243,135 @@ export default function Header() {
           style={{
             position: "fixed",
             inset: 0,
-            backgroundColor: "rgba(0,0,0,0.4)",
+            backgroundColor: "rgba(0,0,0,0.5)",
             zIndex: 999,
           }}
         />
       )}
 
-      {/* Menu lateral */}
+      {/* Menu lateral ADAPTADO PARA CELULAR */}
       <div
         style={{
           position: "fixed",
           top: 0,
-          left: menuAberto ? "0" : "-320px",
-          width: "300px",
+          left: menuAberto ? "0" : "-300px",
+          width: "270px",
           height: "100vh",
           backgroundColor: "white",
-          transition: "0.3s",
+          transition: "0.3s ease-in-out",
           zIndex: 1000,
-          padding: "30px",
+          padding: "25px 20px",
           boxShadow: "3px 0 10px rgba(0,0,0,0.1)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
+          overflowY: "auto", // PERMITE ROLAR A TELA SE O CELULAR FOR PEQUENO
         }}
       >
-        <div>
-          {/* Fechar */}
-          <button
+        {/* Botão Fechar */}
+        <button
+          onClick={() => setMenuAberto(false)}
+          style={{
+            border: "none",
+            background: "transparent",
+            cursor: "pointer",
+            marginBottom: "20px",
+          }}
+        >
+          <img
+            src={xIcon}
+            alt="Fechar"
+            style={{
+              width: "24px",
+              height: "24px",
+            }}
+          />
+        </button>
+
+        {/* Links Principais */}
+        <nav
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "18px",
+          }}
+        >
+          <Link
+            style={linkMenu}
+            to="/"
             onClick={() => setMenuAberto(false)}
-            style={{
-              border: "none",
-              background: "transparent",
-              cursor: "pointer",
-              color: "#C97C8C",
-              marginBottom: "30px",
-            }}
           >
-            <img
-              src={xIcon}
-              alt="Fechar"
-              style={{
-                width: "24px",
-                height: "24px",
-              }}
-            />
-          </button>
+            Início
+          </Link>
 
-          {/* Links Principais */}
-          <nav
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "25px",
-            }}
+          <Link
+            style={linkMenu}
+            to="/produtos"
+            onClick={() => setMenuAberto(false)}
           >
-            <Link
-              style={linkMenu}
-              to="/"
-              onClick={() => setMenuAberto(false)}
-            >
-              Início
-            </Link>
+            Produtos
+          </Link>
 
-            <Link
-              style={linkMenu}
-              to="/produtos"
-              onClick={() => setMenuAberto(false)}
-            >
-              Produtos
-            </Link>
+          <Link
+            style={linkMenu}
+            to="/encomendas"
+            onClick={() => setMenuAberto(false)}
+          >
+            Encomendas
+          </Link>
 
-            <Link
-              style={linkMenu}
-              to="/encomendas"
-              onClick={() => setMenuAberto(false)}
-            >
-              Encomendas
-            </Link>
+          <Link
+            style={linkMenu}
+            to="/sobre"
+            onClick={() => setMenuAberto(false)}
+          >
+            Sobre
+          </Link>
 
-            <Link
-              style={linkMenu}
-              to="/sobre"
-              onClick={() => setMenuAberto(false)}
-            >
-              Sobre
-            </Link>
+          <Link
+            style={linkMenu}
+            to="/contato"
+            onClick={() => setMenuAberto(false)}
+          >
+            Contato
+          </Link>
 
-            <Link
-              style={linkMenu}
-              to="/contato"
-              onClick={() => setMenuAberto(false)}
-            >
-              Contato
-            </Link>
+          <hr style={{ border: "none", borderTop: "1px solid #E7D8D2", margin: "5px 0" }} />
 
-            <hr style={{ border: "none", borderTop: "1px solid #E7D8D2" }} />
+          <Link
+            style={linkMenu}
+            to="/carrinho"
+            onClick={() => setMenuAberto(false)}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <img
+                src={shoppingBagIcon}
+                alt="Carrinho"
+                style={{ width: "20px", height: "20px" }}
+              />
+              <span>Carrinho ({totalItens})</span>
+            </div>
+          </Link>
 
-            <Link
-              style={linkMenu}
-              to="/carrinho"
-              onClick={() => setMenuAberto(false)}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                }}
-              >
-                <img
-                  src={shoppingBagIcon}
-                  alt="Carrinho"
-                  style={{
-                    width: "24px",
-                    height: "24px",
-                  }}
-                />
-                <span>Carrinho ({totalItens})</span>
-              </div>
-            </Link>
-          </nav>
-        </div>
+          <hr style={{ border: "none", borderTop: "1px solid #E7D8D2", margin: "5px 0" }} />
 
-        {/* Rodapé do Menu Hamburguer (Link Discreto do Admin para a Dona) */}
-        <div style={{ paddingTop: "20px", borderTop: "1px solid #eee" }}>
+          {/* ÁREA DO ADMIN - VISÍVEL E BEM LOCALIZADA */}
           <Link
             to="/admin/login"
             onClick={() => setMenuAberto(false)}
             style={{
               textDecoration: "none",
-              color: "#aaa",
-              fontSize: "13px",
-              fontWeight: "500",
+              color: "#C97C8C",
+              fontSize: "15px",
+              fontWeight: "600",
+              backgroundColor: "#FAF5F0",
+              padding: "10px",
+              borderRadius: "8px",
+              textAlign: "center",
+              display: "block",
+              border: "1px solid #E7D8D2",
             }}
           >
-            Acesso Administrativo
+            ⚙️ Área Administrativa (Dona)
           </Link>
-        </div>
+        </nav>
       </div>
     </>
   );
@@ -388,6 +381,6 @@ export default function Header() {
 const linkMenu = {
   textDecoration: "none",
   color: "#7A4E3A",
-  fontSize: "18px",
+  fontSize: "17px",
   fontWeight: "500",
 };
