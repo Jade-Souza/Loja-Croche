@@ -1,130 +1,127 @@
-// Importa React
 import { useEffect, useState } from "react";
-
-// Importa Header
 import Header from "../components/Header";
-
-// Importa Footer
 import Footer from "../components/Footer";
+import plusIcon from "../assets/icones/plus.svg";
+import minusIcon from "../assets/icones/minus.svg";
+import trashIcon from "../assets/icones/trash-2.svg";
+import "./Carrinho.css";
 
-// Página Carrinho
+// Substitua pela Chave PIX oficial da Eliz Crochê
+const CHAVE_PIX_DONO = "elizcroche@exemplo.com";
+
 export default function Carrinho() {
-
-  // Produtos do carrinho
   const [carrinho, setCarrinho] = useState([]);
 
   const [nomeCliente, setNomeCliente] = useState("");
   const [telefoneCliente, setTelefoneCliente] = useState("");
   const [enderecoCliente, setEnderecoCliente] = useState("");
 
-  // Carrega carrinho ao abrir a página
-  useEffect(() => {
-    const itens =
-      JSON.parse(localStorage.getItem("carrinho")) || [];
+  // Método e dados de pagamento
+  const [metodoPagamento, setMetodoPagamento] = useState("pix");
+  const [copiado, setCopiado] = useState(false);
+  const [dadosCartao, setDadosCartao] = useState({
+    numero: "",
+    nome: "",
+    validade: "",
+    cvv: "",
+  });
 
+  // Carrega carrinho e dados do cliente logado ao abrir a página
+  useEffect(() => {
+    const itens = JSON.parse(localStorage.getItem("carrinho")) || [];
     setCarrinho(itens);
+
+    // Se o cliente estiver logado, preenche os campos automaticamente
+    const clienteLogado = JSON.parse(localStorage.getItem("clienteLogado"));
+    if (clienteLogado) {
+      setNomeCliente(clienteLogado.nome || "");
+      setTelefoneCliente(clienteLogado.telefone || "");
+      setEnderecoCliente(clienteLogado.endereco || "");
+    }
   }, []);
 
-  // Remove um item
   function removerItem(index) {
-
     const novoCarrinho = [...carrinho];
-
     novoCarrinho.splice(index, 1);
-
     setCarrinho(novoCarrinho);
-
-    localStorage.setItem(
-      "carrinho",
-      JSON.stringify(novoCarrinho)
-    );
+    localStorage.setItem("carrinho", JSON.stringify(novoCarrinho));
   }
 
-  // Aumenta quantidade
   function aumentarQuantidade(index) {
-
     const novoCarrinho = [...carrinho];
-
     novoCarrinho[index].quantidade += 1;
-
     setCarrinho(novoCarrinho);
-
-    localStorage.setItem(
-      "carrinho",
-      JSON.stringify(novoCarrinho)
-    );
+    localStorage.setItem("carrinho", JSON.stringify(novoCarrinho));
   }
 
-  // Diminui quantidade
   function diminuirQuantidade(index) {
-
     const novoCarrinho = [...carrinho];
-
     if (novoCarrinho[index].quantidade > 1) {
       novoCarrinho[index].quantidade -= 1;
     }
-
     setCarrinho(novoCarrinho);
-
-    localStorage.setItem(
-      "carrinho",
-      JSON.stringify(novoCarrinho)
-    );
+    localStorage.setItem("carrinho", JSON.stringify(novoCarrinho));
   }
 
-  // Esvazia carrinho
   function limparCarrinho() {
-
     localStorage.removeItem("carrinho");
-
     setCarrinho([]);
   }
 
-  // Calcula total
+  function copiarPix() {
+    navigator.clipboard.writeText(CHAVE_PIX_DONO);
+    setCopiado(true);
+    setTimeout(() => setCopiado(false), 3000);
+  }
+
   const total = carrinho.reduce((soma, item) => {
     return soma + item.preco * item.quantidade;
   }, 0);
 
-  // Envia pedido para WhatsApp
   function finalizarPedido() {
-
     if (carrinho.length === 0) {
       alert("Seu carrinho está vazio.");
       return;
     }
 
-    if (
-      !nomeCliente ||
-      !telefoneCliente ||
-      !enderecoCliente
-    ) {
+    if (!nomeCliente || !telefoneCliente || !enderecoCliente) {
       alert("Preencha nome, telefone e endereço.");
       return;
     }
 
-    // Trocar pelo número real depois
-    const numero = "5511999999999";
+    // Validação caso escolha Cartão
+    if (metodoPagamento === "cartao") {
+      const { numero, nome, validade, cvv } = dadosCartao;
+      if (!numero || !nome || !validade || !cvv) {
+        alert("Preencha todos os dados do cartão de crédito.");
+        return;
+      }
+    }
 
-    let mensagem =
-      "Olá! Gostaria de fazer o seguinte pedido:%0A%0A";
+    // Substitua pelo número real da Eliz Crochê
+    const numeroWhatsApp = "5531996833793";
+
+    // Texto da mensagem sem emojis para o WhatsApp
+    let mensagem = "Olá! Gostaria de fazer o seguinte pedido:%0A%0A";
 
     carrinho.forEach((item) => {
       mensagem +=
-        `🧶 ${item.nome}%0A` +
+        `• ${item.nome}%0A` +
         `Cor: ${item.cor}%0A` +
         `Tamanho: ${item.tamanho}%0A` +
         `Quantidade: ${item.quantidade}%0A%0A`;
     });
 
-    mensagem += `💰 Total: R$ ${total.toFixed(2)}`;
+    mensagem += `Total: R$ ${total.toFixed(2)}%0A`;
+    mensagem += `Forma de Pagamento: ${metodoPagamento === "pix" ? "PIX" : "Cartão de Crédito"}`;
 
     mensagem +=
       `%0A%0ANome: ${nomeCliente}` +
       `%0AWhatsApp: ${telefoneCliente}` +
       `%0AEndereço: ${enderecoCliente}`;
 
-    const pedidos =
-       JSON.parse(localStorage.getItem("pedidos")) || [];
+    // SALVAR PEDIDO NO LOCALSTORAGE (Visível no Admin)
+    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
     const novoPedido = {
       id: Date.now(),
@@ -134,40 +131,22 @@ export default function Carrinho() {
       data: new Date().toLocaleDateString(),
       itens: carrinho,
       total,
+      metodoPagamento: metodoPagamento === "pix" ? "PIX" : "Cartão de Crédito",
       status: "Processando",
-      };
+    };
 
     pedidos.push(novoPedido);
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
 
-    localStorage.setItem(
-      "pedidos",
-      JSON.stringify(pedidos)
-    );
-
-        window.open(
-      `https://wa.me/${numero}?text=${mensagem}`,
-      "_blank"
-    );
-
-      localStorage.removeItem("carrinho");
-
-      setCarrinho([]);
-      
-    //SALVAR CLIENTE
-    const clientes =
-      JSON.parse(localStorage.getItem("clientes")) || [];
-
+    // SALVAR / ATUALIZAR CLIENTE
+    const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
     const clienteExistente = clientes.find(
-      (cliente) =>
-        cliente.telefone === telefoneCliente
+      (cliente) => cliente.telefone === telefoneCliente
     );
 
     if (clienteExistente) {
-      clienteExistente.totalPedidos =
-      (clienteExistente.totalPedidos || 0) + 1;
-
-      clienteExistente.totalGasto =
-      (clienteExistente.totalGasto || 0) + total;
+      clienteExistente.totalPedidos = (clienteExistente.totalPedidos || 0) + 1;
+      clienteExistente.totalGasto = (clienteExistente.totalGasto || 0) + total;
     } else {
       clientes.push({
         nome: nomeCliente,
@@ -178,36 +157,32 @@ export default function Carrinho() {
       });
     }
 
-    localStorage.setItem(
-      "clientes",
-      JSON.stringify(clientes)
-    );
+    localStorage.setItem("clientes", JSON.stringify(clientes));
 
+    // Redireciona para o WhatsApp
+    window.open(`https://wa.me/${numeroWhatsApp}?text=${mensagem}`, "_blank");
+
+    localStorage.removeItem("carrinho");
+    setCarrinho([]);
   }
-
 
   return (
     <>
       <Header />
 
-      <main
-        style={{
-          backgroundColor: "#FAF5F0",
-          minHeight: "100vh",
-          padding: "60px",
-        }}
-      >
-        {/* Título */}
-        <h1
+      <main className="carrinho-main">
+        <h1 className="carrinho-titulo">Meu Carrinho</h1>
+
+        <p
           style={{
-            color: "#7A4E3A",
-            marginBottom: "40px",
+            textAlign: "center",
+            color: "#777",
+            marginBottom: "30px",
           }}
         >
-          🛒 Meu Carrinho
-        </h1>
+          Revise seus produtos e escolha a forma de pagamento antes de finalizar.
+        </p>
 
-        {/* Carrinho vazio */}
         {carrinho.length === 0 ? (
           <div
             style={{
@@ -227,31 +202,27 @@ export default function Carrinho() {
                 key={index}
                 style={{
                   backgroundColor: "white",
-                  padding: "25px",
+                  padding: "20px",
                   borderRadius: "20px",
                   marginBottom: "20px",
-                  boxShadow:
-                    "0 5px 15px rgba(0,0,0,0.08)",
+                  border: "1px solid #E7D8D2",
+                  boxShadow: "0 8px 20px rgba(0,0,0,.06)",
                 }}
               >
-                <h2
-                  style={{
-                    color: "#7A4E3A",
-                  }}
-                >
+                <h2 style={{ color: "#7A4E3A", marginBottom: "8px" }}>
                   {item.nome}
                 </h2>
 
-                <p>
+                <p style={{ margin: "4px 0" }}>
                   <strong>Cor:</strong> {item.cor}
                 </p>
 
-                <p>
+                <p style={{ margin: "4px 0" }}>
                   <strong>Tamanho:</strong> {item.tamanho}
                 </p>
 
-                <p>
-                  <strong>Preço:</strong> R$ {item.preco}
+                <p style={{ margin: "4px 0" }}>
+                  <strong>Preço:</strong> R$ {item.preco.toFixed(2)}
                 </p>
 
                 {/* Quantidade */}
@@ -264,27 +235,39 @@ export default function Carrinho() {
                   }}
                 >
                   <button
-                    onClick={() =>
-                      diminuirQuantidade(index)
-                    }
+                    onClick={() => diminuirQuantidade(index)}
+                    style={botaoQuantidade}
                   >
-                    -
+                    <img
+                      src={minusIcon}
+                      alt="Diminuir"
+                      style={{ width: "18px", height: "18px" }}
+                    />
                   </button>
 
-                  <span>
+                  <span
+                    style={{
+                      minWidth: "24px",
+                      textAlign: "center",
+                      fontWeight: "600",
+                      color: "#7A4E3A",
+                    }}
+                  >
                     {item.quantidade}
                   </span>
 
                   <button
-                    onClick={() =>
-                      aumentarQuantidade(index)
-                    }
+                    onClick={() => aumentarQuantidade(index)}
+                    style={botaoQuantidade}
                   >
-                    +
+                    <img
+                      src={plusIcon}
+                      alt="Aumentar"
+                      style={{ width: "18px", height: "18px" }}
+                    />
                   </button>
                 </div>
 
-                {/* Subtotal */}
                 <p
                   style={{
                     marginTop: "15px",
@@ -292,15 +275,11 @@ export default function Carrinho() {
                     fontWeight: "bold",
                   }}
                 >
-                  Subtotal: R$
-                  {(item.preco * item.quantidade).toFixed(2)}
+                  Subtotal: R$ {(item.preco * item.quantidade).toFixed(2)}
                 </p>
 
-                {/* Remover */}
                 <button
-                  onClick={() =>
-                    removerItem(index)
-                  }
+                  onClick={() => removerItem(index)}
                   style={{
                     marginTop: "15px",
                     backgroundColor: "#d9534f",
@@ -309,89 +288,251 @@ export default function Carrinho() {
                     padding: "10px 15px",
                     borderRadius: "8px",
                     cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
                   }}
                 >
-                  🗑️ Remover
+                  <img
+                    src={trashIcon}
+                    alt="Remover"
+                    style={{ width: "18px", height: "18px", filter: "brightness(0) invert(1)" }}
+                  />
+                  Remover
                 </button>
               </div>
             ))}
 
-            {/* Resumo */}
+            {/* Dados do Cliente e Forma de Pagamento */}
             <div
               style={{
                 backgroundColor: "white",
-                padding: "30px",
+                padding: "25px",
                 borderRadius: "20px",
                 marginTop: "30px",
+                border: "1px solid #E7D8D2",
+                boxShadow: "0 8px 20px rgba(0,0,0,.06)",
               }}
             >
               <h2
                 style={{
-                  color: "#7A4E3A",
+                  color: "#C97C8C",
+                  fontSize: "28px",
+                  textAlign: "center",
+                  marginBottom: "20px",
                 }}
               >
                 Total: R$ {total.toFixed(2)}
               </h2>
 
+              {/* Formulário de Dados */}
               <div
                 style={{
-                  marginTop: "20px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "10px",
+                  gap: "12px",
+                  marginBottom: "25px",
                 }}
               >
+                <h3 style={{ color: "#7A4E3A", fontSize: "18px", margin: 0 }}>
+                  Dados para Entrega
+                </h3>
+
                 <input
                   type="text"
                   placeholder="Seu nome"
                   value={nomeCliente}
-                  onChange={(e) =>
-                    setNomeCliente(e.target.value)
-                  }
-                  style={{
-                    padding: "12px",
-                    borderRadius: "10px",
-                    border: "1px solid #ddd",
-                  }}
+                  onChange={(e) => setNomeCliente(e.target.value)}
+                  style={inputEstilo}
                 />
 
                 <input
                   type="text"
                   placeholder="WhatsApp"
                   value={telefoneCliente}
-                  onChange={(e) =>
-                    setTelefoneCliente(e.target.value)
-                  }
-                  style={{
-                    padding: "12px",
-                    borderRadius: "10px",
-                    border: "1px solid #ddd",
-                  }}
+                  onChange={(e) => setTelefoneCliente(e.target.value)}
+                  style={inputEstilo}
                 />
 
                 <input
                   type="text"
                   placeholder="Endereço"
                   value={enderecoCliente}
-                  onChange={(e) =>
-                    setEnderecoCliente(e.target.value)
-                  }
-                  style={{
-                    padding: "12px",
-                    borderRadius: "10px",
-                    border: "1px solid #ddd",
-                  }}
+                  onChange={(e) => setEnderecoCliente(e.target.value)}
+                  style={inputEstilo}
                 />
-</div>
+              </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  gap: "15px",
-                  marginTop: "20px",
-                }}
-              >
-                {/* Limpar */}
+              {/* Opções de Pagamento */}
+              <div style={{ marginBottom: "25px" }}>
+                <h3
+                  style={{
+                    color: "#7A4E3A",
+                    fontSize: "18px",
+                    marginBottom: "12px",
+                  }}
+                >
+                  Forma de Pagamento
+                </h3>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
+                  <label style={radioContainer}>
+                    <input
+                      type="radio"
+                      name="pagamento"
+                      value="pix"
+                      checked={metodoPagamento === "pix"}
+                      onChange={() => setMetodoPagamento("pix")}
+                    />
+                    <span>
+                      <strong>PIX</strong> (Transferência direta ao dono)
+                    </span>
+                  </label>
+
+                  <label style={radioContainer}>
+                    <input
+                      type="radio"
+                      name="pagamento"
+                      value="cartao"
+                      checked={metodoPagamento === "cartao"}
+                      onChange={() => setMetodoPagamento("cartao")}
+                    />
+                    <span>
+                      <strong>Cartão de Crédito</strong>
+                    </span>
+                  </label>
+                </div>
+
+                {/* Box do PIX */}
+                {metodoPagamento === "pix" && (
+                  <div
+                    style={{
+                      marginTop: "15px",
+                      backgroundColor: "#FAF5F0",
+                      padding: "15px",
+                      borderRadius: "12px",
+                      border: "1px dashed #C97C8C",
+                    }}
+                  >
+                    <p
+                      style={{
+                        margin: "0 0 8px 0",
+                        fontSize: "14px",
+                        color: "#555",
+                      }}
+                    >
+                      Chave PIX da Eliz Crochê para pagamento:
+                    </p>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        backgroundColor: "white",
+                        padding: "10px",
+                        borderRadius: "8px",
+                        border: "1px solid #E7D8D2",
+                        flexWrap: "wrap",
+                        gap: "10px"
+                      }}
+                    >
+                      <strong style={{ color: "#7A4E3A", fontSize: "14px", wordBreak: "break-all" }}>
+                        {CHAVE_PIX_DONO}
+                      </strong>
+                      <button
+                        type="button"
+                        onClick={copiarPix}
+                        style={{
+                          backgroundColor: "#7A4E3A",
+                          color: "white",
+                          border: "none",
+                          padding: "8px 14px",
+                          borderRadius: "6px",
+                          cursor: "pointer",
+                          fontWeight: "bold",
+                          fontSize: "12px",
+                        }}
+                      >
+                        {copiado ? "Copiado!" : "Copiar Chave"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Box do Cartão */}
+                {metodoPagamento === "cartao" && (
+                  <div
+                    style={{
+                      marginTop: "15px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "10px",
+                    }}
+                  >
+                    <input
+                      type="text"
+                      placeholder="Número do Cartão"
+                      value={dadosCartao.numero}
+                      onChange={(e) =>
+                        setDadosCartao({
+                          ...dadosCartao,
+                          numero: e.target.value,
+                        })
+                      }
+                      style={inputEstilo}
+                    />
+
+                    <input
+                      type="text"
+                      placeholder="Nome impresso no cartão"
+                      value={dadosCartao.nome}
+                      onChange={(e) =>
+                        setDadosCartao({
+                          ...dadosCartao,
+                          nome: e.target.value,
+                        })
+                      }
+                      style={inputEstilo}
+                    />
+
+                    <div style={{ display: "flex", gap: "10px" }}>
+                      <input
+                        type="text"
+                        placeholder="MM/AA"
+                        value={dadosCartao.validade}
+                        onChange={(e) =>
+                          setDadosCartao({
+                            ...dadosCartao,
+                            validade: e.target.value,
+                          })
+                        }
+                        style={inputEstilo}
+                      />
+                      <input
+                        type="text"
+                        placeholder="CVV"
+                        value={dadosCartao.cvv}
+                        onChange={(e) =>
+                          setDadosCartao({
+                            ...dadosCartao,
+                            cvv: e.target.value,
+                          })
+                        }
+                        style={inputEstilo}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Botões de Ação Responsivos */}
+              <div className="carrinho-botoes-container">
                 <button
                   onClick={limparCarrinho}
                   style={{
@@ -401,12 +542,12 @@ export default function Carrinho() {
                     padding: "15px 25px",
                     borderRadius: "10px",
                     cursor: "pointer",
+                    width: "100%",
                   }}
                 >
                   Esvaziar Carrinho
                 </button>
 
-                {/* Finalizar */}
                 <button
                   onClick={finalizarPedido}
                   style={{
@@ -416,6 +557,9 @@ export default function Carrinho() {
                     padding: "15px 25px",
                     borderRadius: "10px",
                     cursor: "pointer",
+                    fontWeight: "bold",
+                    fontSize: "16px",
+                    width: "100%",
                   }}
                 >
                   Finalizar Pedido
@@ -430,3 +574,38 @@ export default function Carrinho() {
     </>
   );
 }
+
+// Estilos auxiliares
+const botaoQuantidade = {
+  width: "45px",
+  height: "45px",
+  border: "1px solid #E7D8D2",
+  borderRadius: "10px",
+  backgroundColor: "white",
+  cursor: "pointer",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const inputEstilo = {
+  width: "100%",
+  padding: "12px",
+  border: "1px solid #E7D8D2",
+  borderRadius: "12px",
+  color: "#7A4E3A",
+  fontSize: "15px",
+  outline: "none",
+  boxSizing: "border-box",
+};
+
+const radioContainer = {
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+  padding: "12px",
+  border: "1px solid #E7D8D2",
+  borderRadius: "10px",
+  cursor: "pointer",
+  backgroundColor: "#FAF5F0",
+};

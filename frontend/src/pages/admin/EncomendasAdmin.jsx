@@ -1,88 +1,67 @@
 import { useEffect, useState } from "react";
 import SidebarAdmin from "../../components/admin/SidebarAdmin";
 
-export default function EncomendasAdmin() {
+// Importação dos ícones SVG
+import brandWhatsappIcon from "../../assets/icones/brand-whatsapp.svg";
+import usersIcon from "../../assets/icones/users.svg";
+import phoneIcon from "../../assets/icones/phone.svg";
+import clockIcon from "../../assets/icones/clock.svg";
+import yarnIcon from "../../assets/icones/yarn.svg";
+import sparklesIcon from "../../assets/icones/sparkles.svg";
+import scissorsIcon from "../../assets/icones/scissors.svg";
+import pencilIcon from "../../assets/icones/pencil.svg";
 
+export default function EncomendasAdmin() {
   const [encomendas, setEncomendas] = useState([]);
 
   useEffect(() => {
     const encomendasSalvas =
-      JSON.parse(
-        localStorage.getItem("encomendas")
-      ) || [];
+      JSON.parse(localStorage.getItem("encomendas")) || [];
 
     setEncomendas(encomendasSalvas);
   }, []);
 
   function alterarStatus(id, novoStatus) {
-
-    const novaLista = encomendas.map(
-      (encomenda) => {
-
-        if (encomenda.id === id) {
-          return {
-            ...encomenda,
-            status: novoStatus,
-          };
-        }
-
-        return encomenda;
+    const novaLista = encomendas.map((encomenda) => {
+      if (encomenda.id === id) {
+        return {
+          ...encomenda,
+          status: novoStatus,
+        };
       }
-    );
+      return encomenda;
+    });
 
     setEncomendas(novaLista);
-
-    localStorage.setItem(
-      "encomendas",
-      JSON.stringify(novaLista)
-    );
+    localStorage.setItem("encomendas", JSON.stringify(novaLista));
   }
 
   function corStatus(status) {
-
     switch (status) {
-
       case "Aguardando":
         return "#ffc107";
-
       case "Orçamento Enviado":
         return "#0d6efd";
-
       case "Em Produção":
         return "#fd7e14";
-
       case "Finalizada":
         return "#20c997";
-
       case "Entregue":
         return "#198754";
-
       default:
         return "#999";
     }
   }
 
   function conversarWhatsapp(encomenda) {
+    const numero = encomenda.whatsapp.replace(/\D/g, "");
 
-    const numero = encomenda.whatsapp.replace(
-        /\D/g,
-        ""
+    const mensagem = encodeURIComponent(
+      `Olá ${encomenda.cliente}!\n\nRecebi sua encomenda de ${encomenda.produto} e gostaria de conversar sobre os detalhes. 😊\n\nEliz Crochê`
     );
 
-    const mensagem =
-        encodeURIComponent(
-        `Olá ${encomenda.cliente}!
-
-    Recebi sua encomenda de ${encomenda.produto} e gostaria de conversar sobre os detalhes. 😊
-
-    Eliz Crochê`
-        );
-
-    window.open(
-        `https://wa.me/55${numero}?text=${mensagem}`,
-        "_blank"
-    );
-    }
+    window.open(`https://wa.me/55${numero}?text=${mensagem}`, "_blank");
+  }
 
   return (
     <div
@@ -132,28 +111,24 @@ export default function EncomendasAdmin() {
         )}
 
         {encomendas.map((encomenda) => (
-
-          <div
-            key={encomenda.id}
-            style={card}
-          >
-            <h2>
+          <div key={encomenda.id} style={card}>
+            <h2 style={{ marginBottom: "15px" }}>
               Encomenda #{encomenda.id}
             </h2>
 
-            <p>
-              <strong>Cliente:</strong>{" "}
-              {encomenda.cliente}
+            <p style={itemLinha}>
+              <img src={usersIcon} alt="Cliente" style={iconeCampo} />
+              <strong>Cliente:</strong> {encomenda.cliente}
             </p>
 
-            <p>
-              <strong>WhatsApp:</strong>{" "}
-              {encomenda.whatsapp}
+            <p style={itemLinha}>
+              <img src={phoneIcon} alt="WhatsApp" style={iconeCampo} />
+              <strong>WhatsApp:</strong> {encomenda.whatsapp}
             </p>
 
-            <p>
-              <strong>Data:</strong>{" "}
-              {encomenda.data}
+            <p style={itemLinha}>
+              <img src={clockIcon} alt="Data" style={iconeCampo} />
+              <strong>Data:</strong> {encomenda.data}
             </p>
 
             {encomenda.foto && (
@@ -172,32 +147,30 @@ export default function EncomendasAdmin() {
               />
             )}
 
-            <p>
-              <strong>Produto:</strong>{" "}
-              {encomenda.produto}
+            <p style={itemLinha}>
+              <img src={yarnIcon} alt="Produto" style={iconeCampo} />
+              <strong>Produto:</strong> {encomenda.produto}
             </p>
 
-            <p>
-              <strong>Cor:</strong>{" "}
-              {encomenda.cor}
+            <p style={itemLinha}>
+              <img src={sparklesIcon} alt="Cor" style={iconeCampo} />
+              <strong>Cor:</strong> {encomenda.cor}
             </p>
 
-            <p>
-              <strong>Tamanho:</strong>{" "}
-              {encomenda.tamanho}
+            <p style={itemLinha}>
+              <img src={scissorsIcon} alt="Tamanho" style={iconeCampo} />
+              <strong>Tamanho:</strong> {encomenda.tamanho}
             </p>
 
-            <p>
-              <strong>Observação:</strong>{" "}
-              {encomenda.observacao}
+            <p style={itemLinha}>
+              <img src={pencilIcon} alt="Observação" style={iconeCampo} />
+              <strong>Observação:</strong> {encomenda.observacao}
             </p>
 
             <span
               style={{
                 ...statusStyle,
-                backgroundColor: corStatus(
-                  encomenda.status
-                ),
+                backgroundColor: corStatus(encomenda.status),
               }}
             >
               {encomenda.status}
@@ -214,12 +187,7 @@ export default function EncomendasAdmin() {
             >
               <select
                 value={encomenda.status}
-                onChange={(e) =>
-                  alterarStatus(
-                    encomenda.id,
-                    e.target.value
-                  )
-                }
+                onChange={(e) => alterarStatus(encomenda.id, e.target.value)}
                 style={select}
               >
                 <option>Aguardando</option>
@@ -230,13 +198,16 @@ export default function EncomendasAdmin() {
               </select>
 
               <button
-                onClick={() =>
-                    conversarWhatsapp(encomenda)
-                }
+                onClick={() => conversarWhatsapp(encomenda)}
                 style={botaoWhatsapp}
-            >
-                💬 Conversar
-            </button>
+              >
+                <img
+                  src={brandWhatsappIcon}
+                  alt="WhatsApp"
+                  style={iconeBotao}
+                />
+                Conversar
+              </button>
             </div>
           </div>
         ))}
@@ -245,13 +216,25 @@ export default function EncomendasAdmin() {
   );
 }
 
+// Estilos
 const card = {
   backgroundColor: "white",
   borderRadius: "20px",
   padding: "25px",
   marginBottom: "20px",
-  boxShadow:
-    "0 4px 12px rgba(0,0,0,0.06)",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
+};
+
+const itemLinha = {
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  margin: "6px 0",
+};
+
+const iconeCampo = {
+  width: "16px",
+  height: "16px",
 };
 
 const select = {
@@ -269,6 +252,12 @@ const statusStyle = {
   fontWeight: "bold",
 };
 
+const iconeBotao = {
+  width: "18px",
+  height: "18px",
+  filter: "brightness(0) invert(1)",
+};
+
 const botaoWhatsapp = {
   backgroundColor: "#25D366",
   color: "white",
@@ -277,4 +266,7 @@ const botaoWhatsapp = {
   borderRadius: "10px",
   cursor: "pointer",
   fontWeight: "bold",
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
 };

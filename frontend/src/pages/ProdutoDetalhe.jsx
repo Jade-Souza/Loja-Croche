@@ -1,14 +1,11 @@
-// Importa o Header
 import Header from "../components/Header";
-
-// Importa o hook para capturar parâmetros da URL
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-
-// Importa a lista de produtos
 import produtos from "../services/produtos";
-
 import semImagem from "../assets/produtos/sem-imagem.png"
+import plusIcon from "../assets/icones/plus.svg";
+import minusIcon from "../assets/icones/minus.svg";
+import Footer from "../components/Footer";
 
 // Página de detalhes do produto
 export default function ProdutoDetalhe() {
@@ -118,11 +115,14 @@ function adicionarAoCarrinho() {
           {/* Área da imagem */}
           <div
             style={{
-              width: "500px",
-              height: "500px",
+              width: "460px",
+              height: "460px",
               borderRadius: "20px",
               overflow: "hidden",
               backgroundColor: "#F6DDE5",
+              border: "1px solid #E7D8D2",
+              boxShadow:
+                "0 8px 20px rgba(0,0,0,.06)"
             }}
           >
             <img
@@ -140,13 +140,20 @@ function adicionarAoCarrinho() {
           <div
             style={{
               maxWidth: "500px",
+              padding: "10px",
             }}
           >
             {/* Categoria */}
-            <p
+            <p            
               style={{
+                display: "inline-block",
+                padding: "6px 14px",
+                backgroundColor: "#F8E5EB",
                 color: "#C97C8C",
-                fontSize: "20px",
+                borderRadius: "20px",
+                fontSize: "14px",
+                fontWeight: "600",
+                margin: 0,
               }}
             >
               {produto.categoria}
@@ -344,14 +351,25 @@ function adicionarAoCarrinho() {
                     setQuantidade(quantidade - 1)
                   }
                   style={{
-                    width: "40px",
-                    height: "40px",
+                    width: "45px",
+                    height: "45px",
                     border: "1px solid #ddd",
                     borderRadius: "8px",
                     cursor: "pointer",
+                    backgroundColor: "white",
+                    color: "#7A4E3A",
+                    fontSize: "18px",
+                    fontWeight: "bold",
                   }}
                 >
-                  -
+                  <img
+                    src={minusIcon}
+                    alt="Remover"
+                    style={{
+                      width: "18px",
+                      height: "18px",
+                    }}
+                  />
                 </button>
 
                 {/* Quantidade */}
@@ -371,14 +389,25 @@ function adicionarAoCarrinho() {
                     setQuantidade(quantidade + 1)
                   }
                   style={{
-                    width: "40px",
-                    height: "40px",
+                    width: "45px",
+                    height: "45px",
                     border: "1px solid #ddd",
                     borderRadius: "8px",
                     cursor: "pointer",
+                    backgroundColor: "white",
+                    color: "#7A4E3A",
+                    fontSize: "18px",
+                    fontWeight: "bold",
                   }}
                 >
-                  +
+                  <img
+                    src={plusIcon}
+                    alt="Adicionar"
+                    style={{
+                      width: "18px",
+                      height: "18px",
+                    }}
+                  />
                 </button>
               </div>
             </div>
@@ -402,9 +431,16 @@ function adicionarAoCarrinho() {
                 <strong>Quantidade:</strong> {quantidade}
               </p>
 
-              <p>
-                <strong>Total:</strong> R$ {(produto.preco * quantidade).toFixed(2)}
-              </p>
+                <p
+                  style={{
+                    fontSize: "22px",
+                    color: "#C97C8C",
+                    fontWeight: "700",
+                    marginTop: "18px",
+                  }}
+                >
+                  Total: R$ {(produto.preco * quantidade).toFixed(2)}
+                </p>
             </div>
 
             {/* Botão */}
@@ -416,7 +452,7 @@ function adicionarAoCarrinho() {
                 color: "white",
                 border: "none",
                 padding: "18px 35px",
-                borderRadius: "10px",
+                borderRadius: "12px",
                 cursor: "pointer",
                 fontSize: "18px",
                 width: "100%",
@@ -427,6 +463,7 @@ function adicionarAoCarrinho() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

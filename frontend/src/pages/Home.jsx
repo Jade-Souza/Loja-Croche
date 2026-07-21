@@ -34,7 +34,7 @@ export default function Home() {
       <section
         style={{
           width: "100%",
-          height: "600px",
+          height: "400px",
           overflow: "hidden",
         }}
       >
@@ -72,16 +72,41 @@ export default function Home() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "15px",
+              gap: "18px",
+              padding: "22px",
+              background: "#fff",
+              border: "1.8px solid #ead5d8 ",
+              borderRadius: "18px",
+              boxShadow: " 0 6x 18px rgba (0,0,0,.05)",
+              transition: ".3s",
+              cursor: "pointer"
+
             }}
           >
-            <img
-              src={truck}
-              alt=""
+            <div
               style={{
-                width: "38px",
+                  width: "65px",
+                  height: "65px",
+
+                  borderRadius: "50%",
+
+                  background: "#F8E8EB",
+
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+
+                  flexShrink: 0
               }}
-            />
+          >
+              <img
+                  src={truck}
+                  alt=""
+                  style={{
+                      width: "34px",
+                  }}
+              />
+          </div>
 
             <div>
               <strong
@@ -108,16 +133,41 @@ export default function Home() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "15px",
+              gap: "18px",
+              padding: "22px",
+              background: "#fff",
+              border: "1.8px solid #ead5d8 ",
+              borderRadius: "18px",
+              boxShadow: " 0 6x 18px rgba (0,0,0,.05)",
+              transition: ".3s",
+              cursor: "pointer"
+
             }}
           >
-            <img
-              src={yarn}
-              alt=""
+            <div
               style={{
-                width: "38px",
+                  width: "65px",
+                  height: "65px",
+
+                  borderRadius: "50%",
+
+                  background: "#F8E8EB",
+
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+
+                  flexShrink: 0
               }}
-            />
+          >
+              <img
+                  src={yarn}
+                  alt=""
+                  style={{
+                      width: "34px",
+                  }}
+              />
+          </div>
 
             <div>
               <strong
@@ -144,16 +194,40 @@ export default function Home() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "15px",
+              gap: "18px",
+              padding: "22px",
+              background: "#fff",
+              border: "1.8px solid #ead5d8 ",
+              borderRadius: "18px",
+              boxShadow: " 0 6x 18px rgba (0,0,0,.05)",
+              transition: ".3s",
+              cursor: "pointer"
             }}
           >
-            <img
-              src={gem}
-              alt=""
+            <div
               style={{
-                width: "38px",
+                  width: "65px",
+                  height: "65px",
+
+                  borderRadius: "50%",
+
+                  background: "#F8E8EB",
+
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+
+                  flexShrink: 0
               }}
-            />
+          >
+              <img
+                  src={gem}
+                  alt=""
+                  style={{
+                      width: "34px",
+                  }}
+              />
+          </div>
 
             <div>
               <strong
@@ -180,16 +254,40 @@ export default function Home() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "15px",
+              gap: "18px",
+              padding: "22px",
+              background: "#fff",
+              border: "1.8px solid #ead5d8 ",
+              borderRadius: "18px",
+              boxShadow: " 0 6x 18px rgba (0,0,0,.05)",
+              transition: ".3s",
+              cursor: "pointer"
             }}
           >
-            <img
-              src={headset}
-              alt=""
+            <div
               style={{
-                width: "38px",
+                  width: "65px",
+                  height: "65px",
+
+                  borderRadius: "50%",
+
+                  background: "#F8E8EB",
+
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+
+                  flexShrink: 0
               }}
-            />
+          >
+              <img
+                  src={headset}
+                  alt=""
+                  style={{
+                      width: "34px",
+                  }}
+              />
+          </div>
 
             <div>
               <strong

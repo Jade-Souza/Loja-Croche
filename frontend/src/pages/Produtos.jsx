@@ -1,19 +1,11 @@
 import semImagem from "../assets/produtos/sem-imagem.png";
-
-// Importa useState
 import { useState } from "react";
-
-// Importa Header
 import Header from "../components/Header";
-
-// Importa Footer
 import Footer from "../components/Footer";
-
-// Importa Link
 import { Link } from "react-router-dom";
-
-// Importa lista de produtos
 import produtos from "../services/produtos";
+import searchIcon from "../assets/icones/search.svg";
+import arrowIcon from "../assets/icones/arrow-right.svg";
 
 // Página Produtos
 export default function Produtos() {
@@ -90,6 +82,17 @@ export default function Produtos() {
           Nossos Produtos
         </h1>
 
+        <p
+          style={{
+            textAlign: "center",
+            color: "#777",
+            marginTop: "-20px",
+            marginBottom: "40px",
+          }}
+        >
+          Encontre peças artesanais feitas com carinho e exclusividade.
+        </p>
+
         {/* Filtros */}
         <div
           style={{
@@ -101,20 +104,40 @@ export default function Produtos() {
           }}
         >
           {/* Busca */}
-          <input
-            type="text"
-            placeholder="Buscar produto..."
-            value={busca}
-            onChange={(e) =>
-              setBusca(e.target.value)
-            }
+          <div
             style={{
-              padding: "12px",
-              borderRadius: "10px",
-              border: "1px solid #DDD",
-              minWidth: "250px",
+              position: "relative",
             }}
-          />
+          >
+            <img
+              src={searchIcon}
+              alt="Buscar"
+              style={{
+                position: "absolute",
+                left: "12px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                width: "18px",
+                height: "18px",
+              }}
+            />
+
+            <input
+              type="text"
+              placeholder="Buscar produto..."
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              style={{
+                  padding: "12px",
+                  borderRadius: "12px",
+                  border: "1px solid #E7D8D2",
+                  minWidth: "250px",
+                  height: "48px",
+                  color: "#7A4E3A",
+                  fontSize: "15px",
+              }}
+            />
+          </div>
 
           {/* Categoria */}
           <select
@@ -124,9 +147,13 @@ export default function Produtos() {
             }
             style={{
               padding: "12px",
-              borderRadius: "10px",
-              border: "1px solid #DDD",
-            }}
+              borderRadius: "12px",
+              border: "1px solid #E7D8D2",
+              height: "48px",
+              color: "#7A4E3A",
+              backgroundColor: "white",
+              cursor: "pointer",
+          }}
           >
             <option>Todos</option>
             <option>Top</option>
@@ -143,11 +170,15 @@ export default function Produtos() {
               setOrdenacao(e.target.value)
             }
             style={{
-              padding: "12px",
-              borderRadius: "10px",
-              border: "1px solid #DDD",
+                padding: "12px",
+                borderRadius: "12px",
+                border: "1px solid #E7D8D2",
+                height: "48px",
+                color: "#7A4E3A",
+                backgroundColor: "white",
+                cursor: "pointer",
             }}
-          >
+                      >
             <option value="">
               Ordenar por
             </option>
@@ -170,6 +201,17 @@ export default function Produtos() {
           </select>
         </div>
 
+        {/* Quantidade de produtos */}
+        <p
+          style={{
+            color: "#7A4E3A",
+            marginBottom: "20px",
+            fontWeight: "500",
+          }}
+        >
+          {produtosFiltrados.length} produto(s) encontrado(s)
+        </p>
+
         {/* Grid */}
         <div
           style={{
@@ -186,16 +228,16 @@ export default function Produtos() {
                 backgroundColor: "white",
                 borderRadius: "20px",
                 overflow: "hidden",
-                boxShadow:
-                  "0 5px 15px rgba(0,0,0,0.08)",
-                transition: "0.3s",
+                border: "1px solid #E7D8D2",
+                boxShadow: "0 8px 20px rgba(0,0,0,.06)",
+                transition: "0.25s",
               }}
             >
 
             {/* Área da imagem */}
             <div
               style={{
-                height: "300px",
+                height: "260px",
                 overflow: "hidden",
                 backgroundColor: "#F6DDE5",
               }}
@@ -219,7 +261,14 @@ export default function Produtos() {
               >
                 <p
                   style={{
+                    display: "inline-block",
+                    padding: "5px 12px",
+                    backgroundColor: "#F8E5EB",
                     color: "#C97C8C",
+                    borderRadius: "20px",
+                    fontSize: "13px",
+                    fontWeight: "600",
+                    margin: 0,
                   }}
                 >
                   {produto.categoria}
@@ -236,10 +285,11 @@ export default function Produtos() {
 
                 <p
                   style={{
-                    fontSize: "24px",
-                    fontWeight: "bold",
+                    fontSize: "28px",
+                    fontWeight: "700",
                     color: "#C97C8C",
-                    marginTop: "15px",
+                    marginTop: "18px",
+                    marginBottom: "20px",
                   }}
                 >
                   R$ {produto.preco.toFixed(2)}
@@ -259,11 +309,25 @@ export default function Produtos() {
                       color: "white",
                       border: "none",
                       padding: "15px",
-                      borderRadius: "10px",
+                      borderRadius: "12px",
                       cursor: "pointer",
+
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "8px",
                     }}
                   >
                     Ver Produto
+
+                    <img
+                      src={arrowIcon}
+                      alt=""
+                      style={{
+                        width: "16px",
+                        filter: "brightness(0) invert(1)",
+                      }}
+                    />
                   </button>
                 </Link>
               </div>

@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
-
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import plusIcon from "../assets/icones/plus.svg";
+import checkIcon from "../assets/icones/check.svg";
+import pencilIcon from "../assets/icones/pencil.svg";
+import trashIcon from "../assets/icones/trash-2.svg";
+import packageIcon from "../assets/icones/package.svg";
+import shoppingBagIcon from "../assets/icones/shopping-bag.svg";
 
 export default function Admin() {
   const [produtos, setProdutos] = useState([]);
@@ -149,11 +154,23 @@ function salvarEdicao(id) {
           }}
         >
           <div style={cardStyle}>
+            <img
+              src={packageIcon}
+              alt=""
+              style={{
+                width: "34px",
+                marginBottom: "10px",
+              }}
+            />
+
             <h3>Total de Produtos</h3>
+
             <p
               style={{
-                fontSize: "28px",
+                fontSize: "30px",
                 fontWeight: "bold",
+                color: "#C97C8C",
+                marginTop: "10px",
               }}
             >
               {produtos.length}
@@ -223,8 +240,22 @@ function salvarEdicao(id) {
 
           <button
             onClick={cadastrarProduto}
-            style={botaoStyle}
+            style={{
+              ...botaoStyle,
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
           >
+            <img
+              src={plusIcon}
+              alt=""
+              style={{
+                width: "18px",
+                height: "18px",
+              }}
+            />
+
             Salvar Produto
           </button>
         </div>
@@ -286,11 +317,23 @@ function salvarEdicao(id) {
                     />
 
                     <button
-                      onClick={() =>
-                        salvarEdicao(produto.id)
-                      }
-                      style={botaoStyle}
+                      onClick={() => salvarEdicao(produto.id)}
+                      style={{
+                        ...botaoStyle,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
                     >
+                      <img
+                        src={checkIcon}
+                        alt=""
+                        style={{
+                          width: "18px",
+                          height: "18px",
+                        }}
+                      />
+
                       Salvar Alterações
                     </button>
                   </>
@@ -314,9 +357,7 @@ function salvarEdicao(id) {
                       }}
                     >
                       <button
-                        onClick={() =>
-                          iniciarEdicao(produto)
-                        }
+                        onClick={() => iniciarEdicao(produto)}
                         style={{
                           backgroundColor: "#5cb85c",
                           color: "white",
@@ -324,24 +365,38 @@ function salvarEdicao(id) {
                           padding: "10px 15px",
                           borderRadius: "8px",
                           cursor: "pointer",
+
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
                         }}
                       >
+                        <img
+                          src={pencilIcon}
+                          alt=""
+                          style={{
+                            width: "18px",
+                            height: "18px",
+                            filter: "brightness(0) invert(1)",
+                          }}
+                        />
+
                         Editar
                       </button>
 
                       <button
-                        onClick={() =>
-                          removerProduto(produto.id)
-                        }
-                        style={{
-                          backgroundColor: "#d9534f",
-                          color: "white",
-                          border: "none",
-                          padding: "10px 15px",
-                          borderRadius: "8px",
-                          cursor: "pointer",
-                        }}
+                        onClick={() => removerProduto(produto.id)}
+                        style={botaoExcluir}
                       >
+                        <img
+                          src={trashIcon}
+                          alt=""
+                          style={{
+                            width: "17px",
+                            filter: "brightness(0) invert(1)",
+                          }}
+                        />
+
                         Remover
                       </button>
                     </div>
@@ -359,9 +414,11 @@ function salvarEdicao(id) {
 
 const cardStyle = {
   backgroundColor: "white",
-  padding: "20px",
-  borderRadius: "15px",
+  padding: "25px",
+  borderRadius: "18px",
   minWidth: "220px",
+  border: "1px solid #E7D8D2",
+  boxShadow: "0 6px 18px rgba(0,0,0,.05)",
 };
 
 const inputStyle = {
@@ -379,4 +436,30 @@ const botaoStyle = {
   padding: "15px 20px",
   borderRadius: "10px",
   cursor: "pointer",
+};
+
+const botaoEditar = {
+  backgroundColor: "#C97C8C",
+  color: "white",
+  border: "none",
+  padding: "10px 15px",
+  borderRadius: "10px",
+  cursor: "pointer",
+
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+};
+
+const botaoExcluir = {
+  backgroundColor: "#7A4E3A",
+  color: "white",
+  border: "none",
+  padding: "10px 15px",
+  borderRadius: "10px",
+  cursor: "pointer",
+
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
 };

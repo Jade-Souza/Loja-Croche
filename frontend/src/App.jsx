@@ -10,6 +10,10 @@ import Contato from "./pages/Contato";
 import Carrinho from "./pages/Carrinho";
 import Encomendas from "./pages/Encomendas";
 
+// Login e Cadastro do Cliente
+import LoginCliente from "./pages/LoginCliente";
+import CadastroCliente from "./pages/CadastroCliente";
+
 // Login Admin
 import LoginAdmin from "./pages/LoginAdmin";
 
@@ -27,47 +31,23 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* Site */}
+        {/* Site público */}
         <Route path="/" element={<Home />} />
+        <Route path="/produtos" element={<Produtos />} />
+        <Route path="/produtos/:id" element={<ProdutoDetalhe />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/contato" element={<Contato />} />
+        <Route path="/carrinho" element={<Carrinho />} />
+        <Route path="/encomendas" element={<Encomendas />} />
 
-        <Route
-          path="/produtos"
-          element={<Produtos />}
-        />
-
-        <Route
-          path="/produtos/:id"
-          element={<ProdutoDetalhe />}
-        />
-
-        <Route
-          path="/sobre"
-          element={<Sobre />}
-        />
-
-        <Route
-          path="/contato"
-          element={<Contato />}
-        />
-
-        <Route
-          path="/carrinho"
-          element={<Carrinho />}
-        />
-
-        <Route
-          path="/encomendas"
-          element={<Encomendas />}
-        />
+        {/* Autenticação do Cliente */}
+        <Route path="/login" element={<LoginCliente />} />
+        <Route path="/cadastro" element={<CadastroCliente />} />
 
         {/* Login Admin */}
-        <Route
-          path="/admin/login"
-          element={<LoginAdmin />}
-        />
+        <Route path="/admin/login" element={<LoginAdmin />} />
 
-        {/* Dashboard */}
+        {/* Dashboard e Painel Admin */}
         <Route
           path="/admin"
           element={
@@ -77,7 +57,7 @@ function App() {
           }
         />
 
-        {/* Produtos */}
+        {/* Produtos Admin */}
         <Route
           path="/admin/produtos"
           element={
@@ -87,7 +67,7 @@ function App() {
           }
         />
 
-        {/* Pedidos */}
+        {/* Pedidos Admin */}
         <Route
           path="/admin/pedidos"
           element={
@@ -97,7 +77,7 @@ function App() {
           }
         />
 
-        {/* Clientes */}
+        {/* Clientes Admin */}
         <Route
           path="/admin/clientes"
           element={
@@ -107,11 +87,15 @@ function App() {
           }
         />
 
+        {/* Encomendas Admin */}
         <Route
-        path="/admin/encomendas"
-        element={<EncomendasAdmin />}
-      />
-
+          path="/admin/encomendas"
+          element={
+            <RotaPrivada>
+              <EncomendasAdmin />
+            </RotaPrivada>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

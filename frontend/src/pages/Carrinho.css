@@ -1,0 +1,38 @@
+/* Estilos globais e responsivos do Carrinho */
+.carrinho-container {
+  background-color: #FAF5F0;
+  min-height: 100vh;
+  padding: 30px 15px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.carrinho-titulo {
+  color: #7A4E3A;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 32px;
+}
+
+.carrinho-botoes-acao {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-direction: column-reverse; /* No mobile, o botão principal fica no topo */
+}
+
+/* Ajustes para Computadores / Tablets (Telas maiores que 600px) */
+@media (min-width: 600px) {
+  .carrinho-container {
+    padding: 60px 20px;
+  }
+
+  .carrinho-titulo {
+    font-size: 48px;
+  }
+
+  .carrinho-botoes-acao {
+    flex-direction: row;
+  }
+}

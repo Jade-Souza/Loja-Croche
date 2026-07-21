@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import SidebarAdmin from "../../components/admin/SidebarAdmin";
 
-export default function ClientesAdmin() {
+// Importação dos ícones SVG
+import usersIcon from "../../assets/icones/users.svg";
+import receiptIcon from "../../assets/icones/receipt.svg";
+import banknoteIcon from "../../assets/icones/banknote.svg";
+import phoneIcon from "../../assets/icones/phone.svg";
+import mapPinnedIcon from "../../assets/icones/map-pinned.svg";
+import brandWhatsappIcon from "../../assets/icones/brand-whatsapp.svg";
 
+export default function ClientesAdmin() {
   const [clientes, setClientes] = useState([]);
 
   useEffect(() => {
@@ -67,17 +74,26 @@ export default function ClientesAdmin() {
           }}
         >
           <div style={card}>
-            <h3>👥 Total de Clientes</h3>
+            <h3 style={tituloComIcone}>
+              <img src={usersIcon} alt="Clientes" style={iconeCard} />
+              Total de Clientes
+            </h3>
             <h2>{clientes.length}</h2>
           </div>
 
           <div style={card}>
-            <h3>💵 Ticket Médio</h3>
+            <h3 style={tituloComIcone}>
+              <img src={receiptIcon} alt="Ticket Médio" style={iconeCard} />
+              Ticket Médio
+            </h3>
             <h2>R$ {ticketMedio}</h2>
           </div>
 
           <div style={card}>
-            <h3>💰 Total Vendido</h3>
+            <h3 style={tituloComIcone}>
+              <img src={banknoteIcon} alt="Total Vendido" style={iconeCard} />
+              Total Vendido
+            </h3>
             <h2>R$ {totalVendido}</h2>
           </div>
         </div>
@@ -104,20 +120,26 @@ export default function ClientesAdmin() {
             style={linha}
           >
             <div>
-              <h3>{cliente.nome}</h3>
+              <h3 style={{ marginBottom: "10px" }}>{cliente.nome}</h3>
 
-              <p>
-                📱 {cliente.telefone}
+              <p style={textoComIcone}>
+                <img src={phoneIcon} alt="Telefone" style={iconeTexto} />
+                {cliente.telefone}
               </p>
 
-              <p>
-                📍 {cliente.endereco}
+              <p style={textoComIcone}>
+                <img src={mapPinnedIcon} alt="Endereço" style={iconeTexto} />
+                {cliente.endereco}
               </p>
             </div>
 
             <div
               style={{
                 textAlign: "right",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
+                gap: "6px",
               }}
             >
               <p>
@@ -142,7 +164,8 @@ export default function ClientesAdmin() {
                 }
                 style={botaoWhatsapp}
               >
-                💬 Conversar
+                <img src={brandWhatsappIcon} alt="WhatsApp" style={iconeBotao} />
+                Conversar
               </button>
             </div>
           </div>
@@ -152,6 +175,7 @@ export default function ClientesAdmin() {
   );
 }
 
+// Estilos
 const card = {
   backgroundColor: "white",
   padding: "20px",
@@ -172,6 +196,37 @@ const linha = {
     "0 4px 12px rgba(0,0,0,0.06)",
 };
 
+const tituloComIcone = {
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  fontSize: "1rem",
+  marginBottom: "8px",
+};
+
+const textoComIcone = {
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  margin: "4px 0",
+};
+
+const iconeCard = {
+  width: "20px",
+  height: "20px",
+};
+
+const iconeTexto = {
+  width: "16px",
+  height: "16px",
+};
+
+const iconeBotao = {
+  width: "18px",
+  height: "18px",
+  filter: "brightness(0) invert(1)",
+};
+
 const botaoWhatsapp = {
   backgroundColor: "#25D366",
   color: "white",
@@ -180,4 +235,8 @@ const botaoWhatsapp = {
   borderRadius: "10px",
   cursor: "pointer",
   fontWeight: "bold",
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  marginTop: "8px",
 };

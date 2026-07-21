@@ -1,11 +1,12 @@
-// Importa Header
 import Header from "../components/Header";
-
-// Importa Footer
 import Footer from "../components/Footer";
-
-// Importa Link
 import { Link } from "react-router-dom";
+import phoneIcon from "../assets/icones/phone.svg";
+import instagramIcon from "../assets/icones/instagram.svg";
+import mailIcon from "../assets/icones/email.svg";
+import clockIcon from "../assets/icones/clock.svg";
+import sparklesIcon from "../assets/icones/sparkles.svg";
+import arrowIcon from "../assets/icones/arrow-right.svg";
 
 // Página de Contato
 export default function Contato() {
@@ -68,12 +69,29 @@ export default function Contato() {
             <div
               style={cardStyle}
             >
-              <h2 style={tituloCard}>
-                📱 WhatsApp
+              <h2
+                style={{
+                  ...tituloCard,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <img
+                  src={phoneIcon}
+                  alt=""
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                  }}
+                />
+
+                WhatsApp
               </h2>
 
               <p style={textoCard}>
-                (00) 00000-0000
+                (31) 99683-3793
               </p>
 
               <p style={textoPequeno}>
@@ -85,12 +103,29 @@ export default function Contato() {
             <div
               style={cardStyle}
             >
-              <h2 style={tituloCard}>
-                📷 Instagram
+              <h2
+                style={{
+                  ...tituloCard,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <img
+                  src={instagramIcon}
+                  alt=""
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                  }}
+                />
+
+                Instagram
               </h2>
 
               <p style={textoCard}>
-                @elizcroche
+                @eliz.croche
               </p>
 
               <p style={textoPequeno}>
@@ -102,8 +137,25 @@ export default function Contato() {
             <div
               style={cardStyle}
             >
-              <h2 style={tituloCard}>
-                ✉️ E-mail
+              <h2
+                style={{
+                  ...tituloCard,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <img
+                  src={mailIcon}
+                  alt=""
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                  }}
+                />
+
+                E-mail
               </h2>
 
               <p style={textoCard}>
@@ -129,16 +181,30 @@ export default function Contato() {
               borderRadius: "20px",
               padding: "40px",
               textAlign: "center",
-              boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
+              border: "1px solid #E7D8D2",
+              boxShadow: "0 8px 20px rgba(0,0,0,.06)",
             }}
           >
             <h2
               style={{
                 color: "#7A4E3A",
                 marginBottom: "20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
               }}
             >
-              🕒 Horário de Atendimento
+              <img
+                src={clockIcon}
+                alt=""
+                style={{
+                  width: "22px",
+                  height: "22px",
+                }}
+              />
+
+              Horário de Atendimento
             </h2>
 
             <p style={textoCard}>
@@ -160,6 +226,7 @@ export default function Contato() {
           <div
             style={{
               backgroundColor: "#F6DDE5",
+              border: "1px solid #E7D8D2",
               borderRadius: "20px",
               padding: "50px",
               textAlign: "center",
@@ -169,9 +236,22 @@ export default function Contato() {
               style={{
                 color: "#7A4E3A",
                 marginBottom: "20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
               }}
             >
-              ✨ Quer uma peça exclusiva?
+              <img
+                src={sparklesIcon}
+                alt=""
+                style={{
+                  width: "22px",
+                  height: "22px",
+                }}
+              />
+
+              Quer uma peça exclusiva?
             </h2>
 
             <p
@@ -192,12 +272,27 @@ export default function Contato() {
                   color: "white",
                   border: "none",
                   padding: "18px 35px",
-                  borderRadius: "10px",
+                  borderRadius: "12px",
                   cursor: "pointer",
-                  fontSize: "18px",
+
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+
+                  margin: "0 auto",
                 }}
               >
                 Fazer Encomenda
+
+                <img
+                  src={arrowIcon}
+                  alt=""
+                  style={{
+                    width: "16px",
+                    filter: "brightness(0) invert(1)",
+                  }}
+                />
               </button>
             </Link>
           </div>
@@ -216,7 +311,8 @@ const cardStyle = {
   borderRadius: "20px",
   padding: "30px",
   textAlign: "center",
-  boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
+  border: "1px solid #E7D8D2",
+  boxShadow: "0 8px 20px rgba(0,0,0,.06)",
 };
 
 const tituloCard = {

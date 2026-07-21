@@ -1,11 +1,11 @@
-// Importa o Header
 import Header from "../components/Header";
-
-// Importa o Footer
 import Footer from "../components/Footer";
-
-// Importa Link
 import { Link } from "react-router-dom";
+import yarnIcon from "../assets/icones/yarn.svg";
+import handMadeIcon from "../assets/icones/scissors.svg";
+import heartIcon from "../assets/icones/heart.svg";
+import sparklesIcon from "../assets/icones/sparkles.svg";
+import arrowIcon from "../assets/icones/arrow-right.svg";
 
 // Página Sobre
 export default function Sobre() {
@@ -16,7 +16,10 @@ export default function Sobre() {
       <main
         style={{
           backgroundColor: "#FAF5F0",
-          minHeight: "100vh",
+          minHeight: "170px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
         }}
       >
         {/* Hero */}
@@ -38,11 +41,12 @@ export default function Sobre() {
 
           <p
             style={{
-              maxWidth: "900px",
+              maxWidth: "1100px",
               margin: "0 auto",
               color: "#5A3828",
               fontSize: "22px",
-              lineHeight: "1.8",
+              lineHeight: "2",
+              backgroundColor: "transparent",
             }}
           >
             A Eliz Crochê nasceu da paixão pelo artesanato e pelo desejo
@@ -63,7 +67,8 @@ export default function Sobre() {
               backgroundColor: "white",
               borderRadius: "20px",
               padding: "40px",
-              boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
+              border: "1px solid #E7D8D2",
+              boxShadow: "0 8px 20px rgba(0,0,0,.06)",
             }}
           >
             <h2
@@ -77,9 +82,11 @@ export default function Sobre() {
 
             <p
               style={{
-                color: "#555",
-                lineHeight: "1.9",
-                fontSize: "18px",
+                color: "#5A3828",
+                lineHeight: "1.7",
+                fontSize: "28px",
+                fontWeight: "600",
+                marginBottom: "25px",
               }}
             >
               Tudo começou com o amor pelo crochê e pela arte de criar
@@ -128,22 +135,36 @@ export default function Sobre() {
                 padding: "30px",
                 borderRadius: "20px",
                 textAlign: "center",
-                boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
+                border: "1px solid #E7D8D2",
+                boxShadow: "0 8px 20px rgba(0,0,0,.06)",
               }}
             >
               <h3
                 style={{
                   color: "#7A4E3A",
                   marginBottom: "15px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
                 }}
               >
-                🧶 Artesanal
+                <img
+                  src={handMadeIcon}
+                  alt=""
+                  style={{
+                    width: "26px",
+                    height: "26px",
+                  }}
+                />
+
+                Artesanal
               </h3>
 
               <p
                 style={{
                   color: "#555",
-                  lineHeight: "1.7",
+                  lineHeight: "2",
                 }}
               >
                 Cada peça é confeccionada manualmente,
@@ -158,22 +179,36 @@ export default function Sobre() {
                 padding: "30px",
                 borderRadius: "20px",
                 textAlign: "center",
-                boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
+                border: "1px solid #E7D8D2",
+                boxShadow: "0 8px 20px rgba(0,0,0,.06)",
               }}
             >
               <h3
                 style={{
                   color: "#7A4E3A",
                   marginBottom: "15px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
                 }}
               >
-                ❤️ Feito com Carinho
-              </h3>
+                <img
+                  src={heartIcon}
+                  alt=""
+                  style={{
+                    width: "26px",
+                    height: "26px",
+                  }}
+                />
+
+                Feito com Carinho
+              </h3>   
 
               <p
                 style={{
                   color: "#555",
-                  lineHeight: "1.7",
+                  lineHeight: "2",
                 }}
               >
                 Produção cuidadosa para garantir qualidade
@@ -188,22 +223,36 @@ export default function Sobre() {
                 padding: "30px",
                 borderRadius: "20px",
                 textAlign: "center",
-                boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
+                border: "1px solid #E7D8D2",
+                boxShadow: "0 8px 20px rgba(0,0,0,.06)",
               }}
             >
               <h3
                 style={{
                   color: "#7A4E3A",
                   marginBottom: "15px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
                 }}
               >
-                ✨ Exclusividade
+                <img
+                  src={sparklesIcon}
+                  alt=""
+                  style={{
+                    width: "26px",
+                    height: "26px",
+                  }}
+                />
+
+                Exclusividade
               </h3>
 
               <p
                 style={{
                   color: "#555",
-                  lineHeight: "1.7",
+                  lineHeight: "2",
                 }}
               >
                 Produzimos peças únicas e também
@@ -222,6 +271,7 @@ export default function Sobre() {
           <div
             style={{
               backgroundColor: "#F6DDE5",
+              border: "1px solid #E7D8D2",
               borderRadius: "20px",
               padding: "50px",
               textAlign: "center",
@@ -252,13 +302,30 @@ export default function Sobre() {
                   backgroundColor: "#C97C8C",
                   color: "white",
                   border: "none",
-                  padding: "18px 35px",
-                  borderRadius: "10px",
+                  padding: "18px 42px",
+                  fontSize: "17px",
+                  fontWeight: "600",
+                  borderRadius: "12px",
                   cursor: "pointer",
-                  fontSize: "18px",
+
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "8px",
+
+                  margin: "0 auto",
                 }}
               >
                 Fazer Encomenda
+
+                <img
+                  src={arrowIcon}
+                  alt=""
+                  style={{
+                    width: "16px",
+                    filter: "brightness(0) invert(1)",
+                  }}
+                />
               </button>
             </Link>
           </div>

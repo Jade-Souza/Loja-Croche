@@ -1,10 +1,9 @@
-// Importa React
 import { useState } from "react";
-
-// Importa o Header
 import Header from "../components/Header";
+import Footer from "../components/Footer";
+import whatsappIcon from "../assets/icones/whatsapp.svg";
+import arrowIcon from "../assets/icones/arrow-right.svg";
 
-// Página de Encomendas
 export default function Encomendas() {
 
   // Estados do formulário
@@ -81,7 +80,7 @@ export default function Encomendas() {
 
     setNome("");
     setWhatsapp("");
-    setTipo("");
+    setTipo("Top");
     setCor("");
     setTamanho("");
     setDescricao("");
@@ -136,11 +135,17 @@ export default function Encomendas() {
             backgroundColor: "white",
             padding: "40px",
             borderRadius: "20px",
-            boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
+            border: "1px solid #E7D8D2",
+            boxShadow: "0 8px 20px rgba(0,0,0,.06)",
           }}
         >
           {/* Nome */}
-          <label>
+          <label
+            style={{
+              color: "#7A4E3A",
+              fontWeight: "600",
+            }}
+          >
             Nome Completo
           </label>
 
@@ -153,7 +158,12 @@ export default function Encomendas() {
           />
 
           {/* WhatsApp */}
-          <label>
+          <label
+            style={{
+              color: "#7A4E3A",
+              fontWeight: "600",
+            }}
+            >
             WhatsApp
           </label>
 
@@ -161,13 +171,18 @@ export default function Encomendas() {
             type="text"
             value={whatsapp}
             onChange={(e) => setWhatsapp(e.target.value)}
-            placeholder="(00) 00000-0000"
+            placeholder="(31) 99683-3793"
             style={inputStyle}
           />
 
           {/* Tipo */}
-          <label>
-            Tipo da Peça
+          <label
+            style={{
+              color: "#7A4E3A",
+              fontWeight: "600",
+            }}
+            >
+            Tipo
           </label>
 
           <select
@@ -184,8 +199,13 @@ export default function Encomendas() {
           </select>
 
           {/* Cor */}
-          <label>
-            Cor Desejada
+          <label
+            style={{
+              color: "#7A4E3A",
+              fontWeight: "600",
+            }}
+            >
+            Cor
           </label>
 
           <input
@@ -197,7 +217,12 @@ export default function Encomendas() {
           />
 
           {/* Tamanho */}
-          <label>
+          <label
+            style={{
+              color: "#7A4E3A",
+              fontWeight: "600",
+            }}
+            >
             Tamanho
           </label>
 
@@ -215,7 +240,12 @@ export default function Encomendas() {
           </select>
 
           {/* Upload */}
-          <label>
+          <label
+            style={{
+              color: "#7A4E3A",
+              fontWeight: "600",
+            }}
+            >
             Foto de Referência
           </label>
 
@@ -240,7 +270,12 @@ export default function Encomendas() {
           />
 
           {/* Descrição */}
-          <label>
+          <label
+            style={{
+              color: "#7A4E3A",
+              fontWeight: "600",
+            }}
+            >
             Descrição da Encomenda
           </label>
 
@@ -265,13 +300,37 @@ export default function Encomendas() {
               borderRadius: "12px",
               cursor: "pointer",
               fontSize: "18px",
-              fontWeight: "bold",
+              fontWeight: "600",
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "8px",
             }}
           >
-            Solicitar Orçamento via WhatsApp
+            <img
+              src={whatsappIcon}
+              alt=""
+              style={{
+                width: "20px",
+                filter: "brightness(0) invert(1)",
+              }}
+            />
+
+            Solicitar Orçamento
+
+            <img
+              src={arrowIcon}
+              alt=""
+              style={{
+                width: "16px",
+                filter: "brightness(0) invert(1)",
+              }}
+            />
           </button>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
@@ -282,7 +341,8 @@ const inputStyle = {
   padding: "14px",
   marginTop: "8px",
   marginBottom: "20px",
-  borderRadius: "10px",
-  border: "1px solid #DDD",
-  fontSize: "16px",
+  borderRadius: "12px",
+  border: "1px solid #E7D8D2",
+  fontSize: "15px",
+  color: "#7A4E3A",
 };

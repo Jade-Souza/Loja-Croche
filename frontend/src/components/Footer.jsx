@@ -1,14 +1,17 @@
-// Importa Link para navegação
 import { Link } from "react-router-dom";
+import instagramIcon from "../assets/icones/instagram.svg";
+import whatsappIcon from "../assets/icones/brand-whatsapp.svg";
+import tiktokIcon from "../assets/icones/Tiktok.svg";
 
 // Componente Footer
 export default function Footer() {
   return (
     <footer
       style={{
-        backgroundColor: "#7A4E3A",
-        color: "white",
-        padding: "50px 60px",
+        backgroundColor: "##F7F1EB",
+        color: "#7A4E3A",
+        padding: "40px 60px",
+        borderTop: "1px solid #E7D8D2",
       }}
     >
       <div
@@ -24,6 +27,8 @@ export default function Footer() {
           <h2
             style={{
               marginBottom: "15px",
+              color: "#7A4E3A",
+              letterSpacing: "1px"
             }}
           >
             Eliz Crochê
@@ -50,6 +55,9 @@ export default function Footer() {
               flexDirection: "column",
               gap: "10px",
               marginTop: "15px",
+              marginBottom: "15px",
+              color: "#7A4E3A",
+              letterSpacing: "1px"
             }}
           >
             <Link style={linkStyle} to="/">
@@ -72,7 +80,7 @@ export default function Footer() {
 
         {/* Redes */}
         <div>
-          <h3>Redes Sociais</h3>
+          <h3>Siga-nos</h3>
 
           <div
             style={{
@@ -83,17 +91,66 @@ export default function Footer() {
             }}
           >
             <a
-              href="#"
-              style={linkStyle}
+              href="https://www.instagram.com/elizangelar.souza?igsh=MTlsbTFtbW8yMGI3cg=="
+              style={{
+                ...linkStyle,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
             >
+              <img
+                src={instagramIcon}
+                alt="Instagram"
+                style={{
+                  width: "20px",
+                  height: "20px",
+                }}
+              />
+
               Instagram
             </a>
 
             <a
-              href="#"
-              style={linkStyle}
+              href="5531996833793"
+              style={{
+                ...linkStyle,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
             >
+              <img
+                src={whatsappIcon}
+                alt="WhatsApp"
+                style={{
+                  width: "20px",
+                  height: "20px",
+                }}
+              />
+
               WhatsApp
+            </a>
+
+            <a
+              href="https://www.tiktok.com/@eliz.croche?_r=1&_t=ZS-98DwmpwMj7Q"
+              style={{
+                ...linkStyle,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <img
+                src={tiktokIcon}
+                alt="TikTok"
+                style={{
+                  width: "20px",
+                  height: "20px",
+                }}
+              />
+
+              TikTok
             </a>
           </div>
         </div>
@@ -104,7 +161,7 @@ export default function Footer() {
         style={{
           marginTop: "40px",
           marginBottom: "20px",
-          border: "1px solid rgba(255,255,255,0.2)",
+          border: "1px solid #E7D8D2",
         }}
       />
 
@@ -122,6 +179,7 @@ export default function Footer() {
 
 // Estilo dos links
 const linkStyle = {
-  color: "white",
+  color: "#7A4E3A",
   textDecoration: "none",
+  transition: "0.3s",
 };

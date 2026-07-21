@@ -1,5 +1,3 @@
-
-
 // Lista de produtos da loja
 const produtos = [
   {
